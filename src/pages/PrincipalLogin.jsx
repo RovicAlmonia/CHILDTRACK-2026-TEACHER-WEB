@@ -20,7 +20,7 @@ import { ChildTrackLogo } from './PrincipalDashboard/components/SharedComponents
 import { EMERALD } from './PrincipalDashboard/constants';
 const API_BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:5000';
 async function loginPrincipal(username, password) {
-    const res = await fetch(`${API_BASE}/api/principal/login`, {
+    const res = await fetch(`${API_BASE}/principal/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
