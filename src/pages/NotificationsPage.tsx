@@ -261,7 +261,7 @@ export default function NotificationsPage() {
       <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', mb: 3, flexWrap: 'wrap', gap: 2 }}>
         <Box>
           <Typography sx={{
-            fontFamily: '"Playfair Display", serif', fontWeight: 800,
+            fontFamily: '"Nunito", sans-serif', fontWeight: 800,
             fontSize: { xs: '1.6rem', sm: '2rem' },
             color: (theme) => theme.palette.mode === 'dark' ? '#4ade80' : '#2d5016',
           }}>
@@ -361,7 +361,7 @@ export default function NotificationsPage() {
                           <Typography sx={{ fontSize: '0.68rem', fontWeight: 700, color: 'text.secondary', textTransform: 'uppercase', letterSpacing: 0.6 }}>
                             {s.label}
                           </Typography>
-                          <Typography sx={{ fontFamily: '"Playfair Display", serif', fontWeight: 800, fontSize: '1.8rem', color: s.color, lineHeight: 1.1 }}>
+                          <Typography sx={{ fontFamily: '"Nunito", sans-serif', fontWeight: 800, fontSize: '1.8rem', color: s.color, lineHeight: 1.1 }}>
                             {s.value}
                           </Typography>
                         </Box>
@@ -495,7 +495,7 @@ export default function NotificationsPage() {
                             {s.label}
                           </Typography>
                           <Typography sx={{
-                            fontFamily: '"Playfair Display", serif', fontWeight: 800, fontSize: '1.8rem', lineHeight: 1.1,
+                            fontFamily: '"Nunito", sans-serif', fontWeight: 800, fontSize: '1.8rem', lineHeight: 1.1,
                             color: s.color ?? ((theme: any) => theme.palette.mode === 'dark' ? '#4ade80' : '#2d5016'),
                           }}>
                             {s.value}
@@ -794,7 +794,7 @@ export default function NotificationsPage() {
       {/* ADD / EDIT EVENT DIALOG */}
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} maxWidth="sm" fullWidth>
         <DialogTitle sx={{
-          fontFamily: '"Playfair Display", serif', fontWeight: 700, pb: 1,
+          fontFamily: '"Nunito", sans-serif', fontWeight: 700, pb: 1,
           color: (theme) => theme.palette.mode === 'dark' ? '#4ade80' : '#2d5016',
         }}>
           {editId !== null ? 'Edit Event' : 'Add New Event'}

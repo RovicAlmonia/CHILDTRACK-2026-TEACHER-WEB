@@ -287,7 +287,7 @@ export default function AbsencesPage() {
       {/* ── Page header ── */}
       <Box sx={{ mb: 3 }}>
         <Typography sx={{
-          fontFamily: '"Barlow Condensed", sans-serif',
+          fontFamily: '"Nunito", sans-serif',
           fontWeight: 800, fontSize: { xs: '1.7rem', sm: '2.1rem' },
           color: '#e63946', letterSpacing: 0.3,
         }}>
@@ -321,7 +321,7 @@ export default function AbsencesPage() {
                         {s.label}
                       </Typography>
                       <Typography sx={{
-                        fontFamily: '"Barlow Condensed", sans-serif',
+                        fontFamily: '"Nunito", sans-serif',
                         fontWeight: 800, fontSize: '2.2rem', color: s.color, lineHeight: 1.1,
                       }}>
                         {s.value}
@@ -465,7 +465,7 @@ export default function AbsencesPage() {
                               </Typography>
                             </Box>
                           </TableCell>
-                          <TableCell sx={{ color: 'text.secondary', fontSize: '0.82rem', fontFamily: 'monospace' }}>
+                          <TableCell sx={{ color: 'text.secondary', fontSize: '0.82rem', fontFamily: '"Nunito", sans-serif' }}>
                             {r.lrn || '—'}
                           </TableCell>
                           <TableCell sx={{ fontSize: '0.85rem' }}>{r.gender || '—'}</TableCell>
@@ -714,7 +714,7 @@ export default function AbsencesPage() {
 
       {/* ── Edit dialog ── */}
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} maxWidth="sm" fullWidth>
-        <DialogTitle sx={{ fontFamily: '"Barlow Condensed", sans-serif', fontWeight: 800, pb: 1, color: '#e63946', letterSpacing: 0.3 }}>
+        <DialogTitle sx={{ fontFamily: '"Nunito", sans-serif', fontWeight: 800, pb: 1, color: '#e63946', letterSpacing: 0.3 }}>
           Edit Absence Record
         </DialogTitle>
         <DialogContent sx={{ pt: '12px !important' }}>

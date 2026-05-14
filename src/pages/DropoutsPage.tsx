@@ -249,7 +249,7 @@ export default function DropoutsPage() {
     <Box>
       <Box sx={{ mb: 3 }}>
         <Typography sx={{
-          fontFamily: '"Barlow Condensed", sans-serif',
+          fontFamily: '"Nunito", sans-serif',
           fontWeight: 800, fontSize: { xs: '1.7rem', sm: '2.1rem' },
           color: '#e63946', letterSpacing: 0.3,
         }}>
@@ -285,7 +285,7 @@ export default function DropoutsPage() {
                         {s.label}
                       </Typography>
                       <Typography sx={{
-                        fontFamily: '"Barlow Condensed", sans-serif',
+                        fontFamily: '"Nunito", sans-serif',
                         fontWeight: 800, fontSize: '1.9rem', color: s.color, lineHeight: 1.1,
                       }}>
                         {s.value}
@@ -387,7 +387,7 @@ export default function DropoutsPage() {
                           </Typography>
                         </Box>
                       </TableCell>
-                      <TableCell sx={{ color: 'text.secondary', fontSize: '0.82rem', fontFamily: 'monospace' }}>
+                      <TableCell sx={{ color: 'text.secondary', fontSize: '0.82rem', fontFamily: '"Nunito", sans-serif' }}>
                         {r.lrn || '—'}
                       </TableCell>
                       <TableCell sx={{ fontSize: '0.85rem', color: 'text.primary' }}>{r.gender || '—'}</TableCell>
@@ -429,7 +429,7 @@ export default function DropoutsPage() {
 
       {/* Edit dialog */}
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} maxWidth="sm" fullWidth>
-        <DialogTitle sx={{ fontFamily: '"Barlow Condensed", sans-serif', fontWeight: 800, pb: 1, color: '#e63946', letterSpacing: 0.3 }}>
+        <DialogTitle sx={{ fontFamily: '"Nunito", sans-serif', fontWeight: 800, pb: 1, color: '#e63946', letterSpacing: 0.3 }}>
           Edit Dropout Record
         </DialogTitle>
         <DialogContent sx={{ pt: '12px !important' }}>

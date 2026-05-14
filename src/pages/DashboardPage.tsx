@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import {
   Box, Grid, Card, CardContent, Typography, Chip,
   Skeleton, Avatar, Divider, Button, Dialog, DialogTitle,
@@ -27,7 +27,6 @@ const isDropOff = (s: string) => norm(s) === 'dropoff';
 const isPickUp  = (s: string) => norm(s) === 'pickup';
 
 // ── Always returns today's date string in YYYY-MM-DD using LOCAL time ─────────
-// Using toISOString() would give UTC which can be a day behind in PH (UTC+8).
 const getLocalDateStr = (): string => {
   const d = new Date();
   const y = d.getFullYear();
@@ -50,12 +49,28 @@ const DAY_COLOR: Record<string, string> = {
   Thursday: '#f59e0b', Friday: '#e63946', Saturday: '#8b5cf6',
 };
 
+// ── super dark hook ────────────────────────────────────────────
+function useSuperDark() {
+  const [sd, setSd] = useState(() => localStorage.getItem('ct-superdark') === 'true');
+  useEffect(() => {
+    const id = setInterval(() => {
+      setSd(localStorage.getItem('ct-superdark') === 'true');
+    }, 300);
+    return () => clearInterval(id);
+  }, []);
+  return sd;
+}
+
 // ── tiny stat card ─────────────────────────────────────────────
-function MiniStat({ label, value, icon, color, loading }: {
-  label: string; value: number; icon: React.ReactNode; color: string; loading?: boolean;
+function MiniStat({ label, value, icon, color, loading, superDark }: {
+  label: string; value: number; icon: React.ReactNode; color: string; loading?: boolean; superDark?: boolean;
 }) {
   return (
-    <Card sx={{ borderRadius: '14px', height: '100%' }}>
+    <Card sx={{
+      borderRadius: '14px',
+      height: '100%',
+      ...(superDark && { background: '#000000 !important' }),
+    }}>
       <CardContent sx={{ p: '14px 16px !important' }}>
         {loading ? <Skeleton height={52} /> : (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
@@ -64,7 +79,7 @@ function MiniStat({ label, value, icon, color, loading }: {
             </Avatar>
             <Box>
               <Typography sx={{ fontSize: '1.5rem', fontWeight: 800, color, lineHeight: 1,
-                fontFamily: '"Barlow Condensed", sans-serif' }}>
+                fontFamily: '"Nunito", sans-serif' }}>
                 {value}
               </Typography>
               <Typography sx={{ fontSize: '0.68rem', fontWeight: 700, color: 'text.secondary',
@@ -225,19 +240,16 @@ function DeleteDialog({ open, onClose, onConfirm, subject, deleting }: {
 // ── main dashboard ─────────────────────────────────────────────
 export default function DashboardPage() {
   const { teacher } = useAuth();
+  const superDark   = useSuperDark();
 
   // ── Reactive date — updates at midnight automatically ─────────────────────
-  // Stored in state so any change triggers a re-fetch of attendance.
-  // Uses local time (not UTC) so Philippine users (UTC+8) get the right date.
   const [todayStr, setTodayStr] = useState<string>(getLocalDateStr);
 
-  // Check every minute whether the calendar day has changed.
-  // If so, update todayStr → triggers loadAttendance via its useEffect dep.
   useEffect(() => {
     const id = setInterval(() => {
       const current = getLocalDateStr();
       setTodayStr(prev => prev !== current ? current : prev);
-    }, 60_000); // check every 60 s — lightweight, no flicker
+    }, 60_000);
     return () => clearInterval(id);
   }, []);
 
@@ -254,14 +266,13 @@ export default function DashboardPage() {
   const [deletingItem, setDeletingItem] = useState<any | null>(null);
   const [deleting,     setDeleting]     = useState(false);
 
-  // ── useCallback so loadAttendance always closes over the latest todayStr ──
   const loadAttendance = useCallback(() => {
     setLoading(true);
     return Promise.all([
       attendanceAPI.getAll(todayStr).then(r => setRecords(r.data)),
       studentsAPI.getAll().then(r => setStudents(r.data)),
     ]).finally(() => setLoading(false));
-  }, [todayStr]); // re-created whenever todayStr changes
+  }, [todayStr]);
 
   const loadSchedules = useCallback(() => {
     setSchedLoading(true);
@@ -270,18 +281,12 @@ export default function DashboardPage() {
       .finally(() => setSchedLoading(false));
   }, [teacher?.id]);
 
-  // Re-fetch attendance whenever the date changes (midnight rollover or first mount)
-  useEffect(() => {
-    loadAttendance();
-  }, [loadAttendance]);
+  useEffect(() => { loadAttendance(); }, [loadAttendance]);
+  useEffect(() => { if (teacher?.id) loadSchedules(); }, [loadSchedules, teacher?.id]);
 
-  useEffect(() => {
-    if (teacher?.id) loadSchedules();
-  }, [loadSchedules, teacher?.id]);
-
-  const openAdd  = ()       => { setEditingItem(null); setDialogOpen(true); };
-  const openEdit = (s: any) => { setEditingItem(s);    setDialogOpen(true); };
-  const openDelete = (s: any) => { setDeletingItem(s); setDeleteOpen(true); };
+  const openAdd    = ()       => { setEditingItem(null); setDialogOpen(true); };
+  const openEdit   = (s: any) => { setEditingItem(s);    setDialogOpen(true); };
+  const openDelete = (s: any) => { setDeletingItem(s);   setDeleteOpen(true); };
 
   const confirmDelete = async () => {
     if (!deletingItem) return;
@@ -303,7 +308,6 @@ export default function DashboardPage() {
     return 'Good evening';
   };
 
-  // ── Friendly display for the date pill ────────────────────────────────────
   const displayDate = new Date(todayStr + 'T00:00:00').toLocaleDateString('en-PH', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
   });
@@ -327,14 +331,13 @@ export default function DashboardPage() {
       {/* Welcome */}
       <Box sx={{ mb: 3 }}>
         <Typography sx={{
-          fontFamily: '"Barlow Condensed", sans-serif',
+          fontFamily: '"Nunito", sans-serif',
           fontWeight: 800, fontSize: { xs: '1.6rem', sm: '2rem' },
           color: (t) => t.palette.mode === 'dark' ? '#4ade80' : '#2d5016',
         }}>
           {greet()}, {teacher?.name?.split(' ')[0] ?? 'Teacher'} 👋
         </Typography>
 
-        {/* Live date pill — shows exactly which day's attendance is loaded */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5 }}>
           <CalendarMonthIcon sx={{ fontSize: 16, color: 'text.disabled' }} />
           <Typography sx={{ color: 'text.secondary', fontWeight: 600, fontSize: '0.9rem' }}>
@@ -364,13 +367,16 @@ export default function DashboardPage() {
           { label: 'Pick-up',  value: pickup,  icon: <EscalatorWarningIcon fontSize="small" />, color: '#8b5cf6' },
         ].map(s => (
           <Grid key={s.label} size={{ xs: 6, sm: 4, md: 2 }}>
-            <MiniStat {...s} loading={loading} />
+            <MiniStat {...s} loading={loading} superDark={superDark} />
           </Grid>
         ))}
       </Grid>
 
       {/* Schedule card */}
-      <Card sx={{ borderRadius: '18px' }}>
+      <Card sx={{
+        borderRadius: '18px',
+        ...(superDark && { background: '#000000 !important' }),
+      }}>
         <CardContent sx={{ p: 3 }}>
           {/* Header */}
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2.5 }}>
@@ -420,6 +426,7 @@ export default function DashboardPage() {
                   <Box sx={{
                     borderRadius: '14px', overflow: 'hidden',
                     border: '1px solid', borderColor: 'divider',
+                    ...(superDark && { background: '#000000' }),
                   }}>
                     {/* Day header */}
                     <Box sx={{
@@ -444,6 +451,7 @@ export default function DashboardPage() {
                           <Box sx={{
                             px: 2, py: 1, display: 'flex',
                             alignItems: 'center', justifyContent: 'space-between', gap: 1,
+                            ...(superDark && { background: '#000000' }),
                           }}>
                             <Box sx={{ minWidth: 0, flex: 1 }}>
                               <Typography sx={{ fontWeight: 700, fontSize: '0.88rem',

@@ -42,7 +42,7 @@ function SectionHead({ label, dark }: { label: string; dark: boolean }) {
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mt: 2.5, mb: 1.5 }}>
       <Box sx={{ flex: 1, height: '1px', background: divColor }} />
       <Typography sx={{
-        fontFamily: '"Barlow Condensed", sans-serif',
+        fontFamily: '"Nunito", sans-serif',
         fontWeight: 700, fontSize: '0.68rem',
         letterSpacing: '1.3px', textTransform: 'uppercase',
         color: dark ? 'rgba(255,255,255,0.35)' : 'rgba(0,0,0,0.35)',
@@ -217,7 +217,7 @@ export default function RegisterPage() {
         {/* Branding */}
         <Box sx={{ position: 'relative', zIndex: 2, textAlign: 'center', mt: 3.5, px: 5 }}>
           <Typography sx={{
-            fontFamily: '"Barlow Condensed", sans-serif',
+            fontFamily: '"Nunito", sans-serif',
             fontWeight: 800,
             fontSize: { md: '2.2rem', lg: '2.6rem' },
             color: dark ? '#4ade80' : '#2d5016',
@@ -301,7 +301,7 @@ export default function RegisterPage() {
           {/* Header */}
           <Box sx={{ mb: 2.5 }}>
             <Typography sx={{
-              fontFamily: '"Barlow Condensed", sans-serif',
+              fontFamily: '"Nunito", sans-serif',
               fontWeight: 800,
               fontSize: { xs: 24, md: 27 },
               color: dark ? '#ffffff' : '#1a2e1a',
@@ -527,7 +527,7 @@ export default function RegisterPage() {
               sx={{
                 mt: 2.5, height: 44,
                 borderRadius: '8px',
-                fontFamily: '"Barlow Condensed", sans-serif',
+                fontFamily: '"Nunito", sans-serif',
                 fontWeight: 800, fontSize: 15,
                 letterSpacing: '0.09em',
                 textTransform: 'uppercase',

@@ -1035,7 +1035,7 @@ export default function AttendancePage() {
             <TableChartIcon sx={{ color: dark ? '#4ade80' : '#2d5016', fontSize: 26 }} />
             <Box>
               <Typography sx={{
-                fontFamily: '"Barlow Condensed", sans-serif',
+                fontFamily: '"Nunito", sans-serif',
                 fontWeight: 800,
                 fontSize: '1.25rem',
                 color: dark ? '#4ade80' : '#2d5016',
@@ -1399,7 +1399,7 @@ export default function AttendancePage() {
             }}>
               <Typography sx={{
                 fontSize: '0.68rem',
-                fontFamily: 'monospace',
+                fontFamily: '"Nunito", sans-serif',
                 color: dark ? '#94a3b8' : '#6b7280',
                 wordBreak: 'break-all',
                 lineHeight: 1.6,

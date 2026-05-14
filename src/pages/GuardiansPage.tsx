@@ -193,7 +193,7 @@ export default function GuardiansPage() {
       <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', mb: 3, flexWrap: 'wrap', gap: 2 }}>
         <Box>
           <Typography sx={{
-            fontFamily: '"Barlow Condensed", sans-serif', fontWeight: 800,
+            fontFamily: '"Nunito", sans-serif', fontWeight: 800,
             fontSize: { xs: '1.7rem', sm: '2.1rem' }, color: '#6366f1', letterSpacing: 0.3,
           }}>
             Guardians
@@ -246,7 +246,7 @@ export default function GuardiansPage() {
                       <Typography sx={{ fontSize: '0.68rem', fontWeight: 700, color: 'text.secondary', textTransform: 'uppercase', letterSpacing: 0.6 }}>
                         {s.label}
                       </Typography>
-                      <Typography sx={{ fontFamily: '"Barlow Condensed", sans-serif', fontWeight: 800, fontSize: '1.9rem', color: s.color, lineHeight: 1.1 }}>
+                      <Typography sx={{ fontFamily: '"Nunito", sans-serif', fontWeight: 800, fontSize: '1.9rem', color: s.color, lineHeight: 1.1 }}>
                         {s.value}
                       </Typography>
                     </Box>
@@ -427,7 +427,7 @@ export default function GuardiansPage() {
 
       {/* Add Guardian Dialog */}
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} maxWidth="sm" fullWidth>
-        <DialogTitle sx={{ fontFamily: '"Barlow Condensed", sans-serif', fontWeight: 800, pb: 1, color: '#6366f1', letterSpacing: 0.3 }}>
+        <DialogTitle sx={{ fontFamily: '"Nunito", sans-serif', fontWeight: 800, pb: 1, color: '#6366f1', letterSpacing: 0.3 }}>
           Register Guardian
         </DialogTitle>
         <DialogContent sx={{ pt: '12px !important' }}>

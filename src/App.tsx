@@ -7,16 +7,19 @@ import '@fontsource/playfair-display/800.css';
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import Layout            from './components/layout.tsx';
-import LoginPage         from './pages/Loginpage.tsx';
-import RegisterPage      from './pages/Registerpage.tsx';
-import DashboardPage     from './pages/Dashboardpage.tsx';
-import AttendancePage    from './pages/Attendancepage.tsx';
-import AbsencesPage      from './pages/Absencespage.tsx';
-import DropoutsPage      from './pages/Dropoutspage.tsx';
-import GuardiansPage     from './pages/Guardianspage.tsx';
-import StudentsPage      from './pages/Studentspage.tsx';
-import NotificationsPage from './pages/Notificationspage.tsx';
+import Layout            from './components/layout';
+import LoginPage         from './pages/Loginpage';
+import RegisterPage      from './pages/Registerpage';
+import DashboardPage     from './pages/Dashboardpage';
+import AttendancePage    from './pages/Attendancepage';
+import AbsencesPage      from './pages/Absencespage';
+import DropoutsPage      from './pages/Dropoutspage';
+import GuardiansPage     from './pages/Guardianspage';
+import StudentsPage      from './pages/Studentspage';
+import NotificationsPage from './pages/Notificationspage';
+import PrincipalLogin          from './pages/PrincipalLogin';
+import PrincipalDashboard from './pages/PrincipalDashboard/PrincipalDashboard';
+import PrincipalProtectedRoute from './components/PrincipalProtectedRoute';
 
 function Protected({ children }: { children: React.ReactNode }) {
   const { token } = useAuth();
@@ -32,6 +35,14 @@ function AppRoutes() {
     <Routes>
       <Route path="/login"    element={<Public><LoginPage /></Public>} />
       <Route path="/register" element={<Public><RegisterPage /></Public>} />
+
+      <Route path="/principal/login" element={<PrincipalLogin />} />
+      <Route path="/principal" element={
+        <PrincipalProtectedRoute>
+          <PrincipalDashboard />
+        </PrincipalProtectedRoute>
+      } />
+
       <Route element={<Protected><Layout /></Protected>}>
         <Route index                element={<DashboardPage />} />
         <Route path="attendance"    element={<AttendancePage />} />
@@ -45,8 +56,6 @@ function AppRoutes() {
   );
 }
 
-// ThemeProvider and CssBaseline are now handled inside Layout so the
-// dark mode toggle can control the active theme dynamically.
 export default function App() {
   return (
     <BrowserRouter>
