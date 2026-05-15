@@ -50,25 +50,46 @@ function useSuperDark() {
     }, []);
     return sd;
 }
+// ── mono hook ──────────────────────────────────────────────────
+function useMono() {
+    const [mono, setMono] = useState(() => localStorage.getItem('ct-mono') === 'true');
+    useEffect(() => {
+        const id = setInterval(() => {
+            setMono(localStorage.getItem('ct-mono') === 'true');
+        }, 300);
+        return () => clearInterval(id);
+    }, []);
+    return mono;
+}
 // ── tiny stat card ─────────────────────────────────────────────
-function MiniStat({ label, value, icon, color, loading, superDark }) {
+function MiniStat({ label, value, icon, color, loading, superDark, mono }) {
     return (<Card sx={{
             borderRadius: '14px',
             height: '100%',
             ...(superDark && { background: '#000000 !important' }),
+            ...(mono && { background: '#000000 !important', border: '1px solid #1e1e1e !important', boxShadow: 'none !important' }),
         }}>
       <CardContent sx={{ p: '14px 16px !important' }}>
         {loading ? <Skeleton height={52}/> : (<Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-            <Avatar sx={{ bgcolor: `${color}22`, width: 40, height: 40, flexShrink: 0 }}>
-              <Box sx={{ color, display: 'flex', fontSize: 20 }}>{icon}</Box>
+            <Avatar sx={{
+                bgcolor: mono ? 'rgba(255,255,255,0.06)' : `${color}22`,
+                width: 40, height: 40, flexShrink: 0,
+            }}>
+              <Box sx={{ color: mono ? '#ffffff' : color, display: 'flex', fontSize: 20 }}>{icon}</Box>
             </Avatar>
             <Box>
-              <Typography sx={{ fontSize: '1.5rem', fontWeight: 800, color, lineHeight: 1,
-                fontFamily: '"Nunito", sans-serif' }}>
+              <Typography sx={{
+                  fontSize: '1.5rem', fontWeight: 800,
+                  color: mono ? '#ffffff' : color,
+                  lineHeight: 1, fontFamily: '"Nunito", sans-serif',
+              }}>
                 {value}
               </Typography>
-              <Typography sx={{ fontSize: '0.68rem', fontWeight: 700, color: 'text.secondary',
-                textTransform: 'uppercase', letterSpacing: 0.8 }}>
+              <Typography sx={{
+                  fontSize: '0.68rem', fontWeight: 700,
+                  color: mono ? '#555555' : 'text.secondary',
+                  textTransform: 'uppercase', letterSpacing: 0.8,
+              }}>
                 {label}
               </Typography>
             </Box>
@@ -180,6 +201,7 @@ function DeleteDialog({ open, onClose, onConfirm, subject, deleting }) {
 export default function DashboardPage() {
     const { teacher } = useAuth();
     const superDark = useSuperDark();
+    const mono = useMono();
     // ── Reactive date — updates at midnight automatically ─────────────────────
     const [todayStr, setTodayStr] = useState(getLocalDateStr);
     useEffect(() => {
@@ -263,20 +285,26 @@ export default function DashboardPage() {
         <Typography sx={{
             fontFamily: '"Nunito", sans-serif',
             fontWeight: 800, fontSize: { xs: '1.6rem', sm: '2rem' },
-            color: (t) => t.palette.mode === 'dark' ? '#4ade80' : '#2d5016',
+            color: mono
+                ? '#ffffff'
+                : (t) => t.palette.mode === 'dark' ? '#4ade80' : '#2d5016',
         }}>
           {greet()}, {teacher?.name?.split(' ')[0] ?? 'Teacher'} 👋
         </Typography>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5 }}>
           <CalendarMonthIcon sx={{ fontSize: 16, color: 'text.disabled' }}/>
-          <Typography sx={{ color: 'text.secondary', fontWeight: 600, fontSize: '0.9rem' }}>
+          <Typography sx={{ color: mono ? '#555555' : 'text.secondary', fontWeight: 600, fontSize: '0.9rem' }}>
             {displayDate}
           </Typography>
           <Chip label="Today" size="small" sx={{
             height: 20, fontSize: '0.65rem', fontWeight: 800,
-            bgcolor: (t) => t.palette.mode === 'dark' ? 'rgba(74,222,128,0.12)' : 'rgba(45,80,22,0.08)',
-            color: (t) => t.palette.mode === 'dark' ? '#4ade80' : '#2d5016',
+            bgcolor: mono
+                ? 'rgba(255,255,255,0.07)'
+                : (t) => t.palette.mode === 'dark' ? 'rgba(74,222,128,0.12)' : 'rgba(45,80,22,0.08)',
+            color: mono
+                ? '#aaaaaa'
+                : (t) => t.palette.mode === 'dark' ? '#4ade80' : '#2d5016',
             letterSpacing: 0.6,
         }}/>
         </Box>
@@ -292,7 +320,7 @@ export default function DashboardPage() {
             { label: 'Drop-off', value: dropoff, icon: <DirectionsCarIcon fontSize="small"/>, color: '#3b82f6' },
             { label: 'Pick-up', value: pickup, icon: <EscalatorWarningIcon fontSize="small"/>, color: '#8b5cf6' },
         ].map(s => (<Grid key={s.label} size={{ xs: 6, sm: 4, md: 2 }}>
-            <MiniStat {...s} loading={loading} superDark={superDark}/>
+            <MiniStat {...s} loading={loading} superDark={superDark} mono={mono}/>
           </Grid>))}
       </Grid>
 
@@ -300,16 +328,20 @@ export default function DashboardPage() {
       <Card sx={{
             borderRadius: '18px',
             ...(superDark && { background: '#000000 !important' }),
+            ...(mono && { background: '#000000 !important', border: '1px solid #1e1e1e !important', boxShadow: 'none !important' }),
         }}>
         <CardContent sx={{ p: 3 }}>
           {/* Header */}
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2.5 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <CalendarMonthIcon sx={{ color: 'primary.main' }}/>
-              <Typography sx={{ fontWeight: 800, fontSize: '1.05rem', color: 'text.primary' }}>
+              <CalendarMonthIcon sx={{ color: mono ? '#ffffff' : 'primary.main' }}/>
+              <Typography sx={{ fontWeight: 800, fontSize: '1.05rem', color: mono ? '#ffffff' : 'text.primary' }}>
                 Class Schedule
               </Typography>
-              <Chip label={`${schedules.length} class${schedules.length !== 1 ? 'es' : ''}`} size="small" sx={{ fontSize: '0.7rem', fontWeight: 700, ml: 0.5 }}/>
+              <Chip label={`${schedules.length} class${schedules.length !== 1 ? 'es' : ''}`} size="small" sx={{
+                fontSize: '0.7rem', fontWeight: 700, ml: 0.5,
+                ...(mono && { bgcolor: 'rgba(255,255,255,0.07)', color: '#aaaaaa' }),
+              }}/>
             </Box>
             <Button startIcon={<AddIcon />} variant="contained" size="small" onClick={openAdd} sx={{ borderRadius: '10px', fontWeight: 700, fontSize: '0.78rem',
             textTransform: 'none', px: 2 }}>
@@ -333,19 +365,23 @@ export default function DashboardPage() {
               {activeDays.map(day => (<Grid key={day} size={{ xs: 12, sm: 6, md: 4 }}>
                   <Box sx={{
                     borderRadius: '14px', overflow: 'hidden',
-                    border: '1px solid', borderColor: 'divider',
-                    ...(superDark && { background: '#000000' }),
+                    border: '1px solid',
+                    borderColor: mono ? '#1e1e1e' : 'divider',
+                    ...((superDark || mono) && { background: '#000000' }),
                 }}>
                     {/* Day header */}
                     <Box sx={{
-                    bgcolor: DAY_COLOR[day], px: 2, py: 1,
+                    bgcolor: mono ? '#ffffff' : DAY_COLOR[day], px: 2, py: 1,
                     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 }}>
-                      <Typography sx={{ color: '#fff', fontWeight: 800, fontSize: '0.88rem' }}>
+                      <Typography sx={{ color: mono ? '#000000' : '#fff', fontWeight: 800, fontSize: '0.88rem' }}>
                         {day}
                       </Typography>
-                      <Chip label={`${byDay[day].length} class${byDay[day].length > 1 ? 'es' : ''}`} size="small" sx={{ bgcolor: 'rgba(255,255,255,0.25)', color: '#fff',
-                    fontWeight: 700, fontSize: '0.68rem', height: 20 }}/>
+                      <Chip label={`${byDay[day].length} class${byDay[day].length > 1 ? 'es' : ''}`} size="small" sx={{
+                        bgcolor: mono ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.25)',
+                        color: mono ? '#000000' : '#fff',
+                        fontWeight: 700, fontSize: '0.68rem', height: 20,
+                      }}/>
                     </Box>
 
                     {/* Class rows */}
@@ -354,26 +390,28 @@ export default function DashboardPage() {
                           <Box sx={{
                         px: 2, py: 1, display: 'flex',
                         alignItems: 'center', justifyContent: 'space-between', gap: 1,
-                        ...(superDark && { background: '#000000' }),
+                        ...((superDark || mono) && { background: '#000000' }),
                     }}>
                             <Box sx={{ minWidth: 0, flex: 1 }}>
                               <Typography sx={{ fontWeight: 700, fontSize: '0.88rem',
-                        color: 'text.primary', lineHeight: 1.2 }}>
+                        color: mono ? '#eeeeee' : 'text.primary', lineHeight: 1.2 }}>
                                 {s.subject}
                               </Typography>
-                              {s.room && (<Typography sx={{ fontSize: '0.72rem', color: 'text.disabled',
+                              {s.room && (<Typography sx={{ fontSize: '0.72rem',
+                            color: mono ? '#555555' : 'text.disabled',
                             fontWeight: 600, mt: 0.3 }}>
                                   📍 {s.room}
                                 </Typography>)}
                               <Chip label={`${fmtTime(s.start_time)} – ${fmtTime(s.end_time)}`} size="small" sx={{ mt: 0.5, fontSize: '0.68rem', fontWeight: 700,
-                        bgcolor: `${DAY_COLOR[day]}18`,
-                        color: DAY_COLOR[day], border: 'none' }}/>
+                        bgcolor: mono ? 'rgba(255,255,255,0.07)' : `${DAY_COLOR[day]}18`,
+                        color: mono ? '#aaaaaa' : DAY_COLOR[day],
+                        border: 'none' }}/>
                             </Box>
 
                             <Box sx={{ display: 'flex', flexShrink: 0 }}>
                               <Tooltip title="Edit">
                                 <IconButton size="small" onClick={() => openEdit(s)} sx={{ color: 'text.secondary',
-                        '&:hover': { color: DAY_COLOR[day] } }}>
+                        '&:hover': { color: mono ? '#ffffff' : DAY_COLOR[day] } }}>
                                   <EditIcon sx={{ fontSize: 16 }}/>
                                 </IconButton>
                               </Tooltip>
@@ -385,7 +423,7 @@ export default function DashboardPage() {
                               </Tooltip>
                             </Box>
                           </Box>
-                          {i < byDay[day].length - 1 && <Divider sx={{ borderColor: 'divider' }}/>}
+                          {i < byDay[day].length - 1 && <Divider sx={{ borderColor: mono ? '#1a1a1a' : 'divider' }}/>}
                         </Box>))}
                     </Box>
                   </Box>
