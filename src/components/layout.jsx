@@ -133,11 +133,11 @@ const CSS = `
   .lt-superdark .pm-select { border-color: #1a1a1a !important; background: #000000 !important; }
 
   /* ─── Monochrome shell — pure black & white, zero color accents ─── */
-  .lt-root.lt-mono { background: #0a0a0a !important; color: #f5f5f5; }
+  .lt-root.lt-mono { background: #000000 !important; color: #f5f5f5; }
   .lt-root.lt-mono .lt-side { background: #000000 !important; border-right: 1px solid #2a2a2a !important; box-shadow: none !important; }
   .lt-root.lt-mono .lt-brand { border-bottom: 1px solid #1e1e1e !important; }
   .lt-root.lt-mono .lt-topbar { background: #000000 !important; border-bottom: 1px solid #1e1e1e !important; box-shadow: none !important; }
-  .lt-root.lt-mono .lt-content { background: #0a0a0a !important; }
+  .lt-root.lt-mono .lt-content { background: #000000 !important; }
   .lt-root.lt-mono .lt-nav-btn { color: #555555; }
   .lt-root.lt-mono .lt-nav-btn:hover { background: #161616 !important; color: #eeeeee !important; }
   .lt-root.lt-mono .lt-nav-btn.lt-active { background: #ffffff !important; border: none !important; color: #000000 !important; box-shadow: none !important; font-weight: 800 !important; }
@@ -168,9 +168,9 @@ const CSS = `
   .lt-mono .pm-tab:hover:not(.pm-tab-active) { background: #111111 !important; color: #cccccc !important; }
   .lt-mono .pm-photo-ring { background: #ffffff !important; color: #000000 !important; }
   .lt-mono .pm-photo-ring:hover { box-shadow: 0 0 0 3px rgba(255,255,255,0.25) !important; }
-  .lt-mono .pm-input { border-color: #222222 !important; background: #0a0a0a !important; color: #f5f5f5 !important; }
+  .lt-mono .pm-input { border-color: #222222 !important; background: #000000 !important; color: #f5f5f5 !important; }
   .lt-mono .pm-input:focus { border-color: #ffffff !important; box-shadow: 0 0 0 2px rgba(255,255,255,0.08) !important; }
-  .lt-mono .pm-select { border-color: #222222 !important; background: #0a0a0a !important; color: #f5f5f5 !important; }
+  .lt-mono .pm-select { border-color: #222222 !important; background: #000000 !important; color: #f5f5f5 !important; }
   .lt-mono .pm-select:focus { border-color: #ffffff !important; }
   .lt-mono .pm-btn-cancel { color: #888888 !important; border-color: #2a2a2a !important; }
   .lt-mono .pm-btn-cancel:hover { background: #111111 !important; color: #ffffff !important; }
@@ -510,7 +510,7 @@ const CSS = `
   .lt-root.lt-superdark .MuiCard-root { border-color: rgba(56,197,134,0.12) !important; color: #e2e8f0 !important; }
   .lt-root.lt-superdark .MuiTableHead-root .MuiTableCell-root { background: rgba(56,197,134,0.14) !important; }
   .lt-root.lt-superdark .MuiTableBody-root .MuiTableCell-root { background: #000000 !important; border-bottom-color: #111111 !important; color: #9ca3af !important; }
-  .lt-root.lt-superdark .MuiTableBody-root .MuiTableRow-root:hover .MuiTableCell-root { background: #0a0a0a !important; }
+  .lt-root.lt-superdark .MuiTableBody-root .MuiTableRow-root:hover .MuiTableCell-root { background: #000000 !important; }
   .lt-root.lt-superdark .MuiOutlinedInput-root { background: #000000 !important; color: #e2e8f0 !important; }
   .lt-root.lt-superdark .MuiOutlinedInput-notchedOutline { border-color: #1a1a1a !important; }
   .lt-root.lt-superdark .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline { border-color: rgba(56,197,134,0.4) !important; }
