@@ -144,7 +144,7 @@ const CSS = `
   .lt-root.lt-mono .lt-sep { background: #1e1e1e !important; }
   .lt-root.lt-mono .lt-logout-btn { color: #555555 !important; }
   .lt-root.lt-mono .lt-logout-btn:hover { background: #1a1a1a !important; color: #ffffff !important; }
-  .lt-root.lt-mono .lt-menu-btn { border-color: #2a2a2a !important; background: #111111 !important; color: #cccccc !important; }
+  .lt-root.lt-mono .lt-menu-btn { border-color: #2a2a2a !important; background: #111111 !important; color: #5e6166 !important; }
   .lt-root.lt-mono .lt-menu-btn:hover { background: #1e1e1e !important; border-color: #444444 !important; color: #ffffff !important; }
   .lt-root.lt-mono .lt-date-chip { border-color: #2a2a2a !important; background: #111111 !important; color: #666666 !important; }
   .lt-root.lt-mono .lt-greeting { color: #eeeeee !important; }
@@ -165,7 +165,7 @@ const CSS = `
   .lt-mono .pm-close:hover { background: #1a1a1a !important; color: #ffffff !important; }
   .lt-mono .pm-tab { color: #555555 !important; }
   .lt-mono .pm-tab.pm-tab-active { background: #1a1a1a !important; color: #ffffff !important; border-bottom: 2px solid #ffffff !important; }
-  .lt-mono .pm-tab:hover:not(.pm-tab-active) { background: #111111 !important; color: #cccccc !important; }
+  .lt-mono .pm-tab:hover:not(.pm-tab-active) { background: #111111 !important; color: #5e6166 !important; }
   .lt-mono .pm-photo-ring { background: #ffffff !important; color: #000000 !important; }
   .lt-mono .pm-photo-ring:hover { box-shadow: 0 0 0 3px rgba(255,255,255,0.25) !important; }
   .lt-mono .pm-input { border-color: #222222 !important; background: #000000 !important; color: #f5f5f5 !important; }
@@ -187,7 +187,7 @@ const CSS = `
   .lt-root.lt-mono .MuiCard-root { border: 1px solid #1e1e1e !important; box-shadow: none !important; color: #e5e5e5 !important; border-radius: 12px !important; }
   .lt-root.lt-mono .MuiTableHead-root .MuiTableCell-root { background: #ffffff !important; color: #000000 !important; font-size: 0.68rem !important; font-weight: 800 !important; letter-spacing: 0.1em !important; text-transform: uppercase !important; border-bottom: none !important; }
   .lt-root.lt-mono .MuiTableBody-root .MuiTableCell-root { background: #000000 !important; border-bottom: 1px solid #141414 !important; color: #888888 !important; }
-  .lt-root.lt-mono .MuiTableBody-root .MuiTableRow-root:hover .MuiTableCell-root { background: #0f0f0f !important; color: #cccccc !important; }
+  .lt-root.lt-mono .MuiTableBody-root .MuiTableRow-root:hover .MuiTableCell-root { background: #0f0f0f !important; color: #5e6166 !important; }
   .lt-root.lt-mono .MuiOutlinedInput-root { background: #000000 !important; color: #f5f5f5 !important; }
   .lt-root.lt-mono .MuiOutlinedInput-notchedOutline { border-color: #2a2a2a !important; }
   .lt-root.lt-mono .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline { border-color: #666666 !important; }
@@ -195,7 +195,7 @@ const CSS = `
   .lt-root.lt-mono .MuiInputLabel-root { color: #444444 !important; }
   .lt-root.lt-mono .MuiInputLabel-root.Mui-focused { color: #ffffff !important; }
   .lt-root.lt-mono .MuiSelect-select { color: #f5f5f5 !important; }
-  .lt-root.lt-mono .MuiMenuItem-root { color: #cccccc !important; background: #000000 !important; }
+  .lt-root.lt-mono .MuiMenuItem-root { color: #5e6166 !important; background: #000000 !important; }
   .lt-root.lt-mono .MuiMenuItem-root:hover { background: #141414 !important; color: #ffffff !important; }
   .lt-root.lt-mono .MuiDialogTitle-root { color: #ffffff !important; letter-spacing: 0.08em !important; }
   .lt-root.lt-mono .MuiDivider-root { border-color: #1a1a1a !important; }
@@ -205,9 +205,9 @@ const CSS = `
   .lt-root.lt-mono .MuiButton-contained { border-radius: 8px !important; }
   .lt-root.lt-mono .MuiButton-containedPrimary { background: #ffffff !important; color: #000000 !important; }
   .lt-root.lt-mono .MuiButton-containedPrimary:hover { background: #dddddd !important; }
-  .lt-root.lt-mono .MuiTypography-root { color: #cccccc !important; }
-  .lt-root.lt-mono .MuiAlert-standardError { background: rgba(255,255,255,0.04) !important; color: #cccccc !important; border-left: 3px solid #ffffff !important; }
-  .lt-root.lt-mono .MuiAlert-standardSuccess { background: rgba(255,255,255,0.04) !important; color: #cccccc !important; border-left: 3px solid #ffffff !important; }
+  .lt-root.lt-mono .MuiTypography-root { color: #5e6166 !important; }
+  .lt-root.lt-mono .MuiAlert-standardError { background: rgba(255,255,255,0.04) !important; color: #5e6166 !important; border-left: 3px solid #ffffff !important; }
+  .lt-root.lt-mono .MuiAlert-standardSuccess { background: rgba(255,255,255,0.04) !important; color: #5e6166 !important; border-left: 3px solid #ffffff !important; }
   .lt-root.lt-mono .MuiTabs-indicator { background: #ffffff !important; }
   .lt-root.lt-mono .MuiTab-root.Mui-selected { color: #ffffff !important; }
   .lt-root.lt-mono .recharts-cartesian-grid line { stroke: rgba(255,255,255,0.06) !important; }
@@ -541,7 +541,7 @@ const CSS = `
   .lt-root.lt-mono .MuiCard-root { border: 1px solid #1e1e1e !important; box-shadow: none !important; color: #e5e5e5 !important; border-radius: 12px !important; }
   .lt-root.lt-mono .MuiTableHead-root .MuiTableCell-root { background: #ffffff !important; color: #000000 !important; font-size: 0.68rem !important; font-weight: 800 !important; letter-spacing: 0.1em !important; text-transform: uppercase !important; border-bottom: none !important; }
   .lt-root.lt-mono .MuiTableBody-root .MuiTableCell-root { background: #000000 !important; border-bottom: 1px solid #141414 !important; color: #888888 !important; }
-  .lt-root.lt-mono .MuiTableBody-root .MuiTableRow-root:hover .MuiTableCell-root { background: #0f0f0f !important; color: #cccccc !important; }
+  .lt-root.lt-mono .MuiTableBody-root .MuiTableRow-root:hover .MuiTableCell-root { background: #0f0f0f !important; color: #5e6166 !important; }
   .lt-root.lt-mono .MuiOutlinedInput-root { background: #000000 !important; color: #f5f5f5 !important; }
   .lt-root.lt-mono .MuiOutlinedInput-notchedOutline { border-color: #2a2a2a !important; }
   .lt-root.lt-mono .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline { border-color: #666666 !important; }
@@ -549,7 +549,7 @@ const CSS = `
   .lt-root.lt-mono .MuiInputLabel-root { color: #444444 !important; }
   .lt-root.lt-mono .MuiInputLabel-root.Mui-focused { color: #ffffff !important; }
   .lt-root.lt-mono .MuiSelect-select { color: #f5f5f5 !important; }
-  .lt-root.lt-mono .MuiMenuItem-root { color: #cccccc !important; background: #000000 !important; }
+  .lt-root.lt-mono .MuiMenuItem-root { color: #5e6166 !important; background: #000000 !important; }
   .lt-root.lt-mono .MuiMenuItem-root:hover { background: #141414 !important; color: #ffffff !important; }
   .lt-root.lt-mono .MuiDialogTitle-root { color: #ffffff !important; letter-spacing: 0.08em !important; }
   .lt-root.lt-mono .MuiDivider-root { border-color: #1a1a1a !important; }
@@ -559,9 +559,9 @@ const CSS = `
   .lt-root.lt-mono .MuiButton-contained { border-radius: 8px !important; }
   .lt-root.lt-mono .MuiButton-containedPrimary { background: #ffffff !important; color: #000000 !important; }
   .lt-root.lt-mono .MuiButton-containedPrimary:hover { background: #dddddd !important; }
-  .lt-root.lt-mono .MuiTypography-root { color: #cccccc !important; }
-  .lt-root.lt-mono .MuiAlert-standardError { background: rgba(255,255,255,0.04) !important; color: #cccccc !important; border-left: 3px solid #ffffff !important; }
-  .lt-root.lt-mono .MuiAlert-standardSuccess { background: rgba(255,255,255,0.04) !important; color: #cccccc !important; border-left: 3px solid #ffffff !important; }
+  .lt-root.lt-mono .MuiTypography-root { color: #5e6166 !important; }
+  .lt-root.lt-mono .MuiAlert-standardError { background: rgba(255,255,255,0.04) !important; color: #5e6166 !important; border-left: 3px solid #ffffff !important; }
+  .lt-root.lt-mono .MuiAlert-standardSuccess { background: rgba(255,255,255,0.04) !important; color: #5e6166 !important; border-left: 3px solid #ffffff !important; }
   .lt-root.lt-mono .MuiTabs-indicator { background: #ffffff !important; }
   .lt-root.lt-mono .MuiTab-root.Mui-selected { color: #ffffff !important; }
   .lt-root.lt-mono .recharts-cartesian-grid line { stroke: rgba(255,255,255,0.06) !important; }
