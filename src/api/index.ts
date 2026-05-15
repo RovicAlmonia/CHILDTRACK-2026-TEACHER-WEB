@@ -1,8 +1,13 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: (import.meta as any).env?.VITE_API_URL ?? 'http://localhost:5000/api',
+  baseURL: (import.meta as any).env?.VITE_API_URL ?? 
+           (import.meta as any).env?.NEXT_PUBLIC_API_URL ?? 
+           'http://localhost:5000/api',
   timeout: 15000,
+  headers: {
+    'ngrok-skip-browser-warning': 'true'
+  }
 });
 
 API.interceptors.request.use((config) => {
