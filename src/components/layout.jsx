@@ -23,9 +23,12 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CloseIcon from '@mui/icons-material/Close';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import BrightnessLowIcon from '@mui/icons-material/BrightnessLow';
+import ContrastIcon from '@mui/icons-material/Contrast';
 import logoLight from '../assets/childtrack.png';
 import logoDark from '../assets/childtrack2.png';
+
 export const ColorModeContext = createContext({ toggleColorMode: () => { }, mode: 'light' });
+
 const NAV = [
     { label: 'Dashboard', path: '/', icon: <DashboardIcon fontSize="small"/>, countKey: 'dashboard' },
     { label: 'Attendance', path: '/attendance', icon: <CheckCircleIcon fontSize="small"/>, countKey: 'attendance' },
@@ -35,12 +38,15 @@ const NAV = [
     { label: 'Students', path: '/students', icon: <SchoolIcon fontSize="small"/>, countKey: 'students' },
     { label: 'Notifications', path: '/notifications', icon: <NotificationsIcon fontSize="small"/>, countKey: 'notifications' },
 ];
+
 export const useColorMode = () => {
     const stored = typeof localStorage !== 'undefined' ? localStorage.getItem('ct-theme') : null;
     return (stored === 'dark' ? 'dark' : 'light');
 };
+
 // ─── Helpers ────────────────────────────────────────────────────────────────
 const API_BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:5000/api';
+
 async function apiFetch(path, opts = {}) {
     const token = localStorage.getItem('ct_token');
     const res = await fetch(`${API_BASE}${path}`, {
@@ -52,10 +58,10 @@ async function apiFetch(path, opts = {}) {
         },
     });
     const data = await res.json();
-    if (!res.ok)
-        throw new Error(data.error ?? 'Request failed');
+    if (!res.ok) throw new Error(data.error ?? 'Request failed');
     return data;
 }
+
 // ─── CSS ────────────────────────────────────────────────────────────────────
 const CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Nunito:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
@@ -87,7 +93,6 @@ const CSS = `
   .lt-root.lt-font-dmsans  .pm-select,
   .lt-root.lt-font-dmsans  .pm-btn { font-family: 'DM Sans', sans-serif; }
 
-  /* DM Sans uses slightly tighter weights visually — compensate */
   .lt-root.lt-font-dmsans .lt-nav-btn       { font-weight: 500; font-size: 0.9rem; }
   .lt-root.lt-font-dmsans .lt-page-title    { font-weight: 700; letter-spacing: 0.03em; }
   .lt-root.lt-font-dmsans .lt-brand-name    { font-family: 'DM Sans', sans-serif; font-weight: 700; letter-spacing: 0.04em; }
@@ -127,6 +132,88 @@ const CSS = `
   .lt-superdark .pm-input { border-color: #1a1a1a !important; background: #000000 !important; }
   .lt-superdark .pm-select { border-color: #1a1a1a !important; background: #000000 !important; }
 
+  /* ─── Monochrome shell — pure black & white, zero color accents ─── */
+  .lt-root.lt-mono { background: #0a0a0a !important; color: #f5f5f5; }
+  .lt-root.lt-mono .lt-side { background: #000000 !important; border-right: 1px solid #2a2a2a !important; box-shadow: none !important; }
+  .lt-root.lt-mono .lt-brand { border-bottom: 1px solid #1e1e1e !important; }
+  .lt-root.lt-mono .lt-topbar { background: #000000 !important; border-bottom: 1px solid #1e1e1e !important; box-shadow: none !important; }
+  .lt-root.lt-mono .lt-content { background: #0a0a0a !important; }
+  .lt-root.lt-mono .lt-nav-btn { color: #555555; }
+  .lt-root.lt-mono .lt-nav-btn:hover { background: #161616 !important; color: #eeeeee !important; }
+  .lt-root.lt-mono .lt-nav-btn.lt-active { background: #ffffff !important; border: none !important; color: #000000 !important; box-shadow: none !important; font-weight: 800 !important; }
+  .lt-root.lt-mono .lt-sep { background: #1e1e1e !important; }
+  .lt-root.lt-mono .lt-logout-btn { color: #555555 !important; }
+  .lt-root.lt-mono .lt-logout-btn:hover { background: #1a1a1a !important; color: #ffffff !important; }
+  .lt-root.lt-mono .lt-menu-btn { border-color: #2a2a2a !important; background: #111111 !important; color: #cccccc !important; }
+  .lt-root.lt-mono .lt-menu-btn:hover { background: #1e1e1e !important; border-color: #444444 !important; color: #ffffff !important; }
+  .lt-root.lt-mono .lt-date-chip { border-color: #2a2a2a !important; background: #111111 !important; color: #666666 !important; }
+  .lt-root.lt-mono .lt-greeting { color: #eeeeee !important; }
+  .lt-root.lt-mono .lt-greeting-sub { color: #555555 !important; }
+  .lt-root.lt-mono .lt-nav-label { color: #333333 !important; }
+  .lt-root.lt-mono .lt-page-title { color: #ffffff !important; letter-spacing: 0.1em !important; }
+  .lt-root.lt-mono .lt-avatar { background: #ffffff !important; color: #000000 !important; box-shadow: none !important; }
+  .lt-root.lt-mono .lt-avatar:hover { box-shadow: 0 0 0 2px #ffffff !important; }
+  .lt-root.lt-mono .lt-notif-badge { background: #ffffff !important; color: #000000 !important; }
+  .lt-root.lt-mono .lt-font-pill { background: rgba(255,255,255,0.08) !important; color: #888888 !important; }
+  .lt-root.lt-mono .lt-sd-dot { background: #ffffff !important; box-shadow: 0 0 5px rgba(255,255,255,0.4) !important; }
+
+  /* Profile modal — Mono */
+  .lt-mono .pm-modal { background: #000000 !important; border-color: #222222 !important; color: #f5f5f5 !important; }
+  .lt-mono .pm-tabs { border-color: #222222 !important; }
+  .lt-mono .pm-title { color: #ffffff !important; }
+  .lt-mono .pm-close { color: #555555 !important; }
+  .lt-mono .pm-close:hover { background: #1a1a1a !important; color: #ffffff !important; }
+  .lt-mono .pm-tab { color: #555555 !important; }
+  .lt-mono .pm-tab.pm-tab-active { background: #1a1a1a !important; color: #ffffff !important; border-bottom: 2px solid #ffffff !important; }
+  .lt-mono .pm-tab:hover:not(.pm-tab-active) { background: #111111 !important; color: #cccccc !important; }
+  .lt-mono .pm-photo-ring { background: #ffffff !important; color: #000000 !important; }
+  .lt-mono .pm-photo-ring:hover { box-shadow: 0 0 0 3px rgba(255,255,255,0.25) !important; }
+  .lt-mono .pm-input { border-color: #222222 !important; background: #0a0a0a !important; color: #f5f5f5 !important; }
+  .lt-mono .pm-input:focus { border-color: #ffffff !important; box-shadow: 0 0 0 2px rgba(255,255,255,0.08) !important; }
+  .lt-mono .pm-select { border-color: #222222 !important; background: #0a0a0a !important; color: #f5f5f5 !important; }
+  .lt-mono .pm-select:focus { border-color: #ffffff !important; }
+  .lt-mono .pm-btn-cancel { color: #888888 !important; border-color: #2a2a2a !important; }
+  .lt-mono .pm-btn-cancel:hover { background: #111111 !important; color: #ffffff !important; }
+  .lt-mono .pm-btn-save { background: #ffffff !important; color: #000000 !important; }
+  .lt-mono .pm-btn-save:hover { background: #dddddd !important; }
+
+  /* ─── MUI overrides — MONO (pure B&W, placed last to win cascade) ─── */
+  .lt-root.lt-mono .MuiPaper-root,
+  .lt-root.lt-mono .MuiCard-root,
+  .lt-root.lt-mono .MuiTableContainer-root,
+  .lt-root.lt-mono .MuiDialog-paper,
+  .lt-root.lt-mono .MuiMenu-paper,
+  .lt-root.lt-mono .MuiPopover-paper { background: #000000 !important; }
+  .lt-root.lt-mono .MuiCard-root { border: 1px solid #1e1e1e !important; box-shadow: none !important; color: #e5e5e5 !important; border-radius: 12px !important; }
+  .lt-root.lt-mono .MuiTableHead-root .MuiTableCell-root { background: #ffffff !important; color: #000000 !important; font-size: 0.68rem !important; font-weight: 800 !important; letter-spacing: 0.1em !important; text-transform: uppercase !important; border-bottom: none !important; }
+  .lt-root.lt-mono .MuiTableBody-root .MuiTableCell-root { background: #000000 !important; border-bottom: 1px solid #141414 !important; color: #888888 !important; }
+  .lt-root.lt-mono .MuiTableBody-root .MuiTableRow-root:hover .MuiTableCell-root { background: #0f0f0f !important; color: #cccccc !important; }
+  .lt-root.lt-mono .MuiOutlinedInput-root { background: #000000 !important; color: #f5f5f5 !important; }
+  .lt-root.lt-mono .MuiOutlinedInput-notchedOutline { border-color: #2a2a2a !important; }
+  .lt-root.lt-mono .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline { border-color: #666666 !important; }
+  .lt-root.lt-mono .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline { border-color: #ffffff !important; }
+  .lt-root.lt-mono .MuiInputLabel-root { color: #444444 !important; }
+  .lt-root.lt-mono .MuiInputLabel-root.Mui-focused { color: #ffffff !important; }
+  .lt-root.lt-mono .MuiSelect-select { color: #f5f5f5 !important; }
+  .lt-root.lt-mono .MuiMenuItem-root { color: #cccccc !important; background: #000000 !important; }
+  .lt-root.lt-mono .MuiMenuItem-root:hover { background: #141414 !important; color: #ffffff !important; }
+  .lt-root.lt-mono .MuiDialogTitle-root { color: #ffffff !important; letter-spacing: 0.08em !important; }
+  .lt-root.lt-mono .MuiDivider-root { border-color: #1a1a1a !important; }
+  .lt-root.lt-mono .MuiSkeleton-root { background: rgba(255,255,255,0.04) !important; }
+  .lt-root.lt-mono .MuiLinearProgress-root { background: rgba(255,255,255,0.06) !important; }
+  .lt-root.lt-mono .MuiLinearProgress-bar { background: #ffffff !important; }
+  .lt-root.lt-mono .MuiButton-contained { border-radius: 8px !important; }
+  .lt-root.lt-mono .MuiButton-containedPrimary { background: #ffffff !important; color: #000000 !important; }
+  .lt-root.lt-mono .MuiButton-containedPrimary:hover { background: #dddddd !important; }
+  .lt-root.lt-mono .MuiTypography-root { color: #cccccc !important; }
+  .lt-root.lt-mono .MuiAlert-standardError { background: rgba(255,255,255,0.04) !important; color: #cccccc !important; border-left: 3px solid #ffffff !important; }
+  .lt-root.lt-mono .MuiAlert-standardSuccess { background: rgba(255,255,255,0.04) !important; color: #cccccc !important; border-left: 3px solid #ffffff !important; }
+  .lt-root.lt-mono .MuiTabs-indicator { background: #ffffff !important; }
+  .lt-root.lt-mono .MuiTab-root.Mui-selected { color: #ffffff !important; }
+  .lt-root.lt-mono .recharts-cartesian-grid line { stroke: rgba(255,255,255,0.06) !important; }
+  .lt-root.lt-mono .recharts-text,
+  .lt-root.lt-mono .recharts-cartesian-axis-tick-value { fill: #444444 !important; }
+
   .lt-side {
     width: 240px; flex-shrink: 0; display: flex; flex-direction: column;
     overflow-y: auto; overflow-x: hidden; scrollbar-width: none;
@@ -137,7 +224,6 @@ const CSS = `
   .lt-root.lt-light .lt-side { background: #ffffff; border-right: 1px solid #e5e7eb; box-shadow: 2px 0 8px rgba(0,0,0,0.04); }
   .lt-root.lt-dark  .lt-side { background: #1e293b; border-right: 1px solid rgba(56,197,134,0.15); }
 
-  /* ─── Brand ─── */
   .lt-brand { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; padding: 18px 12px 10px; overflow: hidden; }
   .lt-root.lt-light .lt-brand { border-bottom: 1px solid #f0f0f0; }
   .lt-root.lt-dark  .lt-brand { border-bottom: 1px solid rgba(56,197,134,0.15); }
@@ -161,7 +247,6 @@ const CSS = `
   .lt-root.lt-dark  .lt-brand-sub { color: rgba(56,197,134,0.5); }
   .lt-mini .lt-brand-sub { opacity: 0; height: 0; overflow: hidden; }
 
-  /* ─── Nav ─── */
   .lt-nav { padding: 12px 8px 0; flex: 1; }
   .lt-nav-label { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 0 8px; margin: 8px 0 4px; white-space: nowrap; overflow: hidden; transition: opacity 0.2s, height 0.2s; }
   .lt-root.lt-light .lt-nav-label { color: #9ca3af; }
@@ -175,7 +260,6 @@ const CSS = `
     cursor: pointer; transition: all 0.15s; margin-bottom: 2px;
     text-align: left; white-space: nowrap; overflow: hidden; position: relative;
   }
-
   .lt-root.lt-light .lt-nav-btn { color: #6b7280; }
   .lt-root.lt-dark  .lt-nav-btn { color: #94a3b8; }
   .lt-mini .lt-nav-btn { justify-content: center; padding: 9.6px 0; }
@@ -184,7 +268,6 @@ const CSS = `
   .lt-root.lt-light .lt-nav-btn.lt-active { background: #2d5016; color: #ffffff; font-weight: 700; box-shadow: 0 2px 8px rgba(45,80,22,0.25); }
   .lt-root.lt-dark  .lt-nav-btn.lt-active { background: rgba(56,197,134,0.15); border: 1px solid rgba(56,197,134,0.35); color: #38c586; font-weight: 700; }
 
-  /* font-indicator pill on font toggle button */
   .lt-font-pill {
     margin-left: auto; font-size: 0.58rem; font-weight: 800; letter-spacing: 0.06em;
     text-transform: uppercase; padding: 2px 6px; border-radius: 4px; flex-shrink: 0;
@@ -194,14 +277,12 @@ const CSS = `
   .lt-root.lt-superdark .lt-font-pill { background: rgba(56,197,134,0.15); color: #38c586; }
   .lt-mini .lt-font-pill { display: none; }
 
-  /* super dark indicator dot */
   .lt-sd-dot {
     margin-left: auto; width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
     background: #38c586; box-shadow: 0 0 6px #38c586;
   }
   .lt-mini .lt-sd-dot { display: none; }
 
-  /* notification badge */
   .lt-notif-badge {
     position: absolute; top: 5px; right: 7px; min-width: 17px; height: 17px;
     border-radius: 9px; background: #e63946; color: #fff; font-size: 0.6rem;
@@ -217,7 +298,6 @@ const CSS = `
   .lt-root.lt-light .lt-sep { background: #f0f0f0; }
   .lt-root.lt-dark  .lt-sep { background: rgba(56,197,134,0.12); }
 
-  /* ─── Footer ─── */
   .lt-footer { padding: 0 8px 16px; flex-shrink: 0; }
   .lt-logout-btn { width: 100%; display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: none; border-radius: 8px; background: transparent; font-size: 0.82rem; font-weight: 700; font-family: 'Nunito', sans-serif; cursor: pointer; transition: all 0.15s; text-align: left; white-space: nowrap; overflow: hidden; }
   .lt-root.lt-light .lt-logout-btn { color: #dc2626; }
@@ -227,10 +307,8 @@ const CSS = `
   .lt-root.lt-dark  .lt-logout-btn:hover { background: rgba(220,38,38,0.1); color: #fca5a5; }
   .lt-mini .lt-logout-text { display: none; }
 
-  /* ─── Main ─── */
   .lt-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
 
-  /* ─── Topbar ─── */
   .lt-topbar { height: 58px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 50; }
   .lt-root.lt-light .lt-topbar { background: #ffffff; border-bottom: 1px solid #e5e7eb; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
   .lt-root.lt-dark  .lt-topbar { background: #1e293b; border-bottom: 1px solid rgba(56,197,134,0.12); }
@@ -274,7 +352,6 @@ const CSS = `
   .lt-root.lt-light .lt-content { background: #ffffff; }
   .lt-root.lt-dark  .lt-content { background: #1e293b; }
 
-  /* ─── Profile Modal Overlay ─── */
   .pm-overlay {
     position: fixed; inset: 0; z-index: 999;
     display: flex; align-items: center; justify-content: center;
@@ -423,7 +500,7 @@ const CSS = `
   .lt-root.lt-dark .recharts-cartesian-grid line { stroke: rgba(56,197,134,0.1) !important; }
   .lt-root.lt-dark .recharts-text, .lt-root.lt-dark .recharts-cartesian-axis-tick-value { fill: #94a3b8 !important; }
 
-  /* ─── MUI overrides — SUPER DARK (must be LAST to win the cascade) ─── */
+  /* ─── MUI overrides — SUPER DARK ─── */
   .lt-root.lt-superdark .MuiPaper-root,
   .lt-root.lt-superdark .MuiCard-root,
   .lt-root.lt-superdark .MuiTableContainer-root,
@@ -453,8 +530,47 @@ const CSS = `
   .lt-root.lt-superdark .MuiTab-root.Mui-selected { color: #38c586 !important; }
   .lt-root.lt-superdark .recharts-cartesian-grid line { stroke: rgba(56,197,134,0.08) !important; }
   .lt-root.lt-superdark .recharts-text, .lt-root.lt-superdark .recharts-cartesian-axis-tick-value { fill: #4b5563 !important; }
+
+  /* ─── MUI overrides — MONO (pure B&W, no color accents, placed last) ─── */
+  .lt-root.lt-mono .MuiPaper-root,
+  .lt-root.lt-mono .MuiCard-root,
+  .lt-root.lt-mono .MuiTableContainer-root,
+  .lt-root.lt-mono .MuiDialog-paper,
+  .lt-root.lt-mono .MuiMenu-paper,
+  .lt-root.lt-mono .MuiPopover-paper { background: #000000 !important; }
+  .lt-root.lt-mono .MuiCard-root { border: 1px solid #1e1e1e !important; box-shadow: none !important; color: #e5e5e5 !important; border-radius: 12px !important; }
+  .lt-root.lt-mono .MuiTableHead-root .MuiTableCell-root { background: #ffffff !important; color: #000000 !important; font-size: 0.68rem !important; font-weight: 800 !important; letter-spacing: 0.1em !important; text-transform: uppercase !important; border-bottom: none !important; }
+  .lt-root.lt-mono .MuiTableBody-root .MuiTableCell-root { background: #000000 !important; border-bottom: 1px solid #141414 !important; color: #888888 !important; }
+  .lt-root.lt-mono .MuiTableBody-root .MuiTableRow-root:hover .MuiTableCell-root { background: #0f0f0f !important; color: #cccccc !important; }
+  .lt-root.lt-mono .MuiOutlinedInput-root { background: #000000 !important; color: #f5f5f5 !important; }
+  .lt-root.lt-mono .MuiOutlinedInput-notchedOutline { border-color: #2a2a2a !important; }
+  .lt-root.lt-mono .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline { border-color: #666666 !important; }
+  .lt-root.lt-mono .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline { border-color: #ffffff !important; }
+  .lt-root.lt-mono .MuiInputLabel-root { color: #444444 !important; }
+  .lt-root.lt-mono .MuiInputLabel-root.Mui-focused { color: #ffffff !important; }
+  .lt-root.lt-mono .MuiSelect-select { color: #f5f5f5 !important; }
+  .lt-root.lt-mono .MuiMenuItem-root { color: #cccccc !important; background: #000000 !important; }
+  .lt-root.lt-mono .MuiMenuItem-root:hover { background: #141414 !important; color: #ffffff !important; }
+  .lt-root.lt-mono .MuiDialogTitle-root { color: #ffffff !important; letter-spacing: 0.08em !important; }
+  .lt-root.lt-mono .MuiDivider-root { border-color: #1a1a1a !important; }
+  .lt-root.lt-mono .MuiSkeleton-root { background: rgba(255,255,255,0.04) !important; }
+  .lt-root.lt-mono .MuiLinearProgress-root { background: rgba(255,255,255,0.06) !important; }
+  .lt-root.lt-mono .MuiLinearProgress-bar { background: #ffffff !important; }
+  .lt-root.lt-mono .MuiButton-contained { border-radius: 8px !important; }
+  .lt-root.lt-mono .MuiButton-containedPrimary { background: #ffffff !important; color: #000000 !important; }
+  .lt-root.lt-mono .MuiButton-containedPrimary:hover { background: #dddddd !important; }
+  .lt-root.lt-mono .MuiTypography-root { color: #cccccc !important; }
+  .lt-root.lt-mono .MuiAlert-standardError { background: rgba(255,255,255,0.04) !important; color: #cccccc !important; border-left: 3px solid #ffffff !important; }
+  .lt-root.lt-mono .MuiAlert-standardSuccess { background: rgba(255,255,255,0.04) !important; color: #cccccc !important; border-left: 3px solid #ffffff !important; }
+  .lt-root.lt-mono .MuiTabs-indicator { background: #ffffff !important; }
+  .lt-root.lt-mono .MuiTab-root.Mui-selected { color: #ffffff !important; }
+  .lt-root.lt-mono .recharts-cartesian-grid line { stroke: rgba(255,255,255,0.06) !important; }
+  .lt-root.lt-mono .recharts-text,
+  .lt-root.lt-mono .recharts-cartesian-axis-tick-value { fill: #444444 !important; }
 `;
-function ProfileModal({ teacher, dark, onClose, onSaved }) {
+
+// ─── Profile Modal ────────────────────────────────────────────────────────────
+function ProfileModal({ teacher, dark, mono, onClose, onSaved }) {
     const [tab, setTab] = useState('profile');
     const [saving, setSaving] = useState(false);
     const [msg, setMsg] = useState(null);
@@ -470,18 +586,19 @@ function ProfileModal({ teacher, dark, onClose, onSaved }) {
     });
     const [photo, setPhoto] = useState(teacher?.photo_base64 ?? '');
     const [pw, setPw] = useState({ current: '', next: '', confirm: '' });
-    const themeClass = dark ? 'lt-dark' : 'lt-light';
+
+    // mono class takes priority for modal theming
+    const themeClass = mono ? 'lt-mono' : dark ? 'lt-dark' : 'lt-light';
+
     const handlePhotoChange = (e) => {
         const file = e.target.files?.[0];
-        if (!file)
-            return;
+        if (!file) return;
         const reader = new FileReader();
         reader.onload = () => setPhoto(reader.result);
         reader.readAsDataURL(file);
     };
     const saveProfile = async () => {
-        setSaving(true);
-        setMsg(null);
+        setSaving(true); setMsg(null);
         try {
             await apiFetch(`/teachers/${teacher.id}`, {
                 method: 'PUT',
@@ -489,25 +606,14 @@ function ProfileModal({ teacher, dark, onClose, onSaved }) {
             });
             setMsg({ type: 'ok', text: 'Profile updated successfully!' });
             onSaved({ ...teacher, ...form, photo_base64: photo });
-        }
-        catch (err) {
+        } catch (err) {
             setMsg({ type: 'err', text: err.message ?? 'Failed to update profile.' });
-        }
-        finally {
-            setSaving(false);
-        }
+        } finally { setSaving(false); }
     };
     const savePassword = async () => {
-        if (pw.next !== pw.confirm) {
-            setMsg({ type: 'err', text: 'New passwords do not match.' });
-            return;
-        }
-        if (pw.next.length < 6) {
-            setMsg({ type: 'err', text: 'Password must be at least 6 characters.' });
-            return;
-        }
-        setSaving(true);
-        setMsg(null);
+        if (pw.next !== pw.confirm) { setMsg({ type: 'err', text: 'New passwords do not match.' }); return; }
+        if (pw.next.length < 6) { setMsg({ type: 'err', text: 'Password must be at least 6 characters.' }); return; }
+        setSaving(true); setMsg(null);
         try {
             await apiFetch(`/teachers/${teacher.id}/change-password`, {
                 method: 'PUT',
@@ -515,25 +621,17 @@ function ProfileModal({ teacher, dark, onClose, onSaved }) {
             });
             setMsg({ type: 'ok', text: 'Password changed successfully!' });
             setPw({ current: '', next: '', confirm: '' });
-        }
-        catch (err) {
+        } catch (err) {
             setMsg({ type: 'err', text: err.message ?? 'Failed to change password.' });
-        }
-        finally {
-            setSaving(false);
-        }
+        } finally { setSaving(false); }
     };
-    const handleBackdrop = (e) => {
-        if (e.target === e.currentTarget)
-            onClose();
-    };
+    const handleBackdrop = (e) => { if (e.target === e.currentTarget) onClose(); };
+
     return (<div className={`pm-overlay ${themeClass}`} onClick={handleBackdrop}>
       <div className={`pm-modal ${themeClass}`}>
         <div className="pm-header">
           <span className="pm-title">My Profile</span>
-          <button className="pm-close" onClick={onClose}>
-            <CloseIcon fontSize="small"/>
-          </button>
+          <button className="pm-close" onClick={onClose}><CloseIcon fontSize="small"/></button>
         </div>
         <div className="pm-tabs">
           <button className={`pm-tab${tab === 'profile' ? ' pm-tab-active' : ''}`} onClick={() => { setTab('profile'); setMsg(null); }}>
@@ -549,7 +647,7 @@ function ProfileModal({ teacher, dark, onClose, onSaved }) {
               <div className="pm-photo-ring" onClick={() => fileRef.current?.click()}>
                 {photo ? <img src={photo} alt="Profile"/> : <span>{form.name?.charAt(0)?.toUpperCase() ?? '?'}</span>}
                 <div className="pm-photo-overlay">
-                  <CameraAltIcon sx={{ fontSize: 22, color: '#fff' }}/>
+                  <CameraAltIcon sx={{ fontSize: 22, color: mono ? '#000000' : '#ffffff' }}/>
                 </div>
               </div>
               <span className="pm-photo-hint">Click to upload photo</span>
@@ -596,6 +694,7 @@ function ProfileModal({ teacher, dark, onClose, onSaved }) {
       </div>
     </div>);
 }
+
 // ─── Layout ───────────────────────────────────────────────────────────────────
 export default function Layout() {
     const { teacher, logout, setTeacher } = useAuth();
@@ -604,10 +703,12 @@ export default function Layout() {
     const [open, setOpen] = useState(true);
     const [dark, setDark] = useState(() => localStorage.getItem('ct-theme') === 'dark');
     const [superDark, setSuperDark] = useState(() => localStorage.getItem('ct-superdark') === 'true');
+    const [mono, setMono] = useState(() => localStorage.getItem('ct-mono') === 'true');
     const [font, setFont] = useState(() => localStorage.getItem('ct-font') ?? 'nunito');
     const [notifCount, setNotifCount] = useState(0);
     const [profileOpen, setProfileOpen] = useState(false);
     const [navCounts, setNavCounts] = useState({});
+
     useEffect(() => {
         const onStorage = () => setDark(localStorage.getItem('ct-theme') === 'dark');
         window.addEventListener('storage', onStorage);
@@ -617,55 +718,72 @@ export default function Layout() {
         }, 300);
         return () => { window.removeEventListener('storage', onStorage); clearInterval(id); };
     }, []);
+
     useEffect(() => {
         const today = new Date().toISOString().split('T')[0];
         const fetchCount = () => {
             attendanceAPI.getAll(today)
                 .then((r) => {
-                const records = r.data || [];
-                const attended = records.filter((x) => x.status !== 'Dropped Out').length;
-                const absences = records.filter((x) => x.status === 'Absent').length;
-                const dropouts = records.filter((x) => x.status === 'Dropped Out').length;
-                setNotifCount(attended);
-                setNavCounts({ attendance: attended, absences, dropouts, notifications: attended });
-            })
+                    const records = r.data || [];
+                    const attended = records.filter((x) => x.status !== 'Dropped Out').length;
+                    const absences = records.filter((x) => x.status === 'Absent').length;
+                    const dropouts = records.filter((x) => x.status === 'Dropped Out').length;
+                    setNotifCount(attended);
+                    setNavCounts({ attendance: attended, absences, dropouts, notifications: attended });
+                })
                 .catch(() => { });
         };
         fetchCount();
         const id = setInterval(fetchCount, 30_000);
         return () => clearInterval(id);
     }, []);
+
     const toggleDark = () => {
         const next = !dark;
         setDark(next);
         localStorage.setItem('ct-theme', next ? 'dark' : 'light');
-        if (!next && superDark) {
-            setSuperDark(false);
-            localStorage.setItem('ct-superdark', 'false');
+        // turning off dark also turns off sub-modes
+        if (!next) {
+            if (superDark) { setSuperDark(false); localStorage.setItem('ct-superdark', 'false'); }
+            if (mono)      { setMono(false);      localStorage.setItem('ct-mono', 'false'); }
         }
     };
+
     const toggleSuperDark = () => {
         const next = !superDark;
         setSuperDark(next);
         localStorage.setItem('ct-superdark', String(next));
-        if (next && !dark) {
-            setDark(true);
-            localStorage.setItem('ct-theme', 'dark');
+        if (next) {
+            setMono(false); localStorage.setItem('ct-mono', 'false'); // mutually exclusive
+            if (!dark) { setDark(true); localStorage.setItem('ct-theme', 'dark'); }
         }
     };
+
+    const toggleMono = () => {
+        const next = !mono;
+        setMono(next);
+        localStorage.setItem('ct-mono', String(next));
+        if (next) {
+            setSuperDark(false); localStorage.setItem('ct-superdark', 'false'); // mutually exclusive
+            if (!dark) { setDark(true); localStorage.setItem('ct-theme', 'dark'); }
+        }
+    };
+
     const toggleFont = () => {
         const next = font === 'nunito' ? 'dmsans' : 'nunito';
         setFont(next);
         localStorage.setItem('ct-font', next);
     };
+
     const colorMode = useMemo(() => ({ toggleColorMode: toggleDark, mode: dark ? 'dark' : 'light' }), [dark]);
+
     const muiTheme = useMemo(() => createTheme({
         palette: {
             mode: dark ? 'dark' : 'light',
-            primary: { main: dark ? '#38c586' : '#2d5016' },
+            primary: { main: mono ? '#ffffff' : dark ? '#38c586' : '#2d5016' },
             background: {
-                default: superDark ? '#000000' : dark ? '#0f172a' : '#f0f2f5',
-                paper: superDark ? '#000000' : dark ? '#1e293b' : '#ffffff',
+                default: mono ? '#0a0a0a' : superDark ? '#000000' : dark ? '#0f172a' : '#f0f2f5',
+                paper:   mono ? '#000000' : superDark ? '#000000' : dark ? '#1e293b' : '#ffffff',
             },
             text: { primary: dark ? '#e2e8f0' : '#111827', secondary: dark ? '#94a3b8' : '#6b7280' },
             divider: dark ? '#334155' : '#e5e7eb',
@@ -675,13 +793,15 @@ export default function Layout() {
             MuiCard: { styleOverrides: { root: { borderRadius: 12 } } },
             MuiTableRow: { styleOverrides: { root: { '&.MuiTableRow-hover:hover': { backgroundColor: 'transparent' } } } },
         },
-    }), [dark, superDark, font]);
+    }), [dark, superDark, mono, font]);
+
     const isActive = (path) => path === '/' ? location.pathname === '/' : location.pathname.startsWith(path);
     const currentPage = NAV.find(n => isActive(n.path))?.label ?? 'CHILDTrack';
     const shortDate = new Date().toLocaleDateString('en-PH', { month: 'short', day: 'numeric', year: 'numeric' });
     const getHour = () => new Date().getHours();
     const greeting = getHour() < 12 ? 'Good Morning' : getHour() < 18 ? 'Good Afternoon' : 'Good Evening';
     const logoSrc = dark ? logoDark : logoLight;
+
     const handleProfileSaved = (updated) => {
         setTeacher((prev) => {
             const merged = { ...prev, ...updated };
@@ -689,12 +809,15 @@ export default function Layout() {
             return merged;
         });
     };
+
     const rootClass = [
         'lt-root',
         dark ? 'lt-dark' : 'lt-light',
         superDark ? 'lt-superdark' : '',
+        mono ? 'lt-mono' : '',
         font === 'dmsans' ? 'lt-font-dmsans' : 'lt-font-nunito',
     ].filter(Boolean).join(' ');
+
     return (<ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={muiTheme}>
         <CssBaseline />
@@ -712,14 +835,14 @@ export default function Layout() {
             <nav className="lt-nav">
               <div className="lt-nav-label">Overview</div>
               {NAV.map(item => {
-            const count = navCounts[item.countKey] ?? 0;
-            const showBadge = count > 0 && !isActive(item.path);
-            return (<button key={item.path} className={`lt-nav-btn${isActive(item.path) ? ' lt-active' : ''}`} onClick={() => navigate(item.path)} title={!open ? item.label : ''}>
+                const count = navCounts[item.countKey] ?? 0;
+                const showBadge = count > 0 && !isActive(item.path);
+                return (<button key={item.path} className={`lt-nav-btn${isActive(item.path) ? ' lt-active' : ''}`} onClick={() => navigate(item.path)} title={!open ? item.label : ''}>
                     <span className="lt-nav-icon">{item.icon}</span>
                     <span className="lt-nav-text">{item.label}</span>
                     {showBadge && (<span className="lt-notif-badge">{count > 99 ? '99+' : count}</span>)}
                   </button>);
-        })}
+              })}
 
               <div className="lt-sep"/>
               <div className="lt-nav-label">Preferences</div>
@@ -732,17 +855,19 @@ export default function Layout() {
               </button>
 
               {dark && (<button className={`lt-nav-btn${superDark ? ' lt-active' : ''}`} onClick={toggleSuperDark} title={superDark ? 'Disable Super Dark' : 'Enable Super Dark (AMOLED black)'}>
-                  <span className="lt-nav-icon">
-                    <BrightnessLowIcon fontSize="small"/>
-                  </span>
+                  <span className="lt-nav-icon"><BrightnessLowIcon fontSize="small"/></span>
                   <span className="lt-nav-text">Super Dark</span>
                   {superDark && <span className="lt-sd-dot"/>}
                 </button>)}
 
+              {dark && (<button className={`lt-nav-btn${mono ? ' lt-active' : ''}`} onClick={toggleMono} title={mono ? 'Disable Monochrome' : 'Enable Monochrome (black & white)'}>
+                  <span className="lt-nav-icon"><ContrastIcon fontSize="small"/></span>
+                  <span className="lt-nav-text">Monochrome</span>
+                  {mono && <span className="lt-sd-dot"/>}
+                </button>)}
+
               <button className="lt-nav-btn" onClick={toggleFont} title={font === 'nunito' ? 'Switch to DM Sans' : 'Switch to Nunito'}>
-                <span className="lt-nav-icon">
-                  <TextFieldsIcon fontSize="small"/>
-                </span>
+                <span className="lt-nav-icon"><TextFieldsIcon fontSize="small"/></span>
                 <span className="lt-nav-text">
                   {font === 'nunito' ? 'Switch to DM Sans' : 'Switch to Nunito'}
                 </span>
@@ -779,8 +904,8 @@ export default function Layout() {
                 {teacher && (<>
                     <div className="lt-avatar" title="Edit profile" onClick={() => setProfileOpen(true)}>
                       {teacher.photo_base64
-                ? <img src={teacher.photo_base64} alt={teacher.name}/>
-                : teacher.name?.charAt(0).toUpperCase()}
+                        ? <img src={teacher.photo_base64} alt={teacher.name}/>
+                        : teacher.name?.charAt(0).toUpperCase()}
                     </div>
                     <div style={{ textAlign: 'left' }}>
                       <div className="lt-greeting">{greeting}{teacher.name ? `, ${teacher.name}` : ''}</div>
@@ -803,7 +928,7 @@ export default function Layout() {
         </div>
 
         {/* ═══ Profile Modal ═══ */}
-        {profileOpen && teacher && (<ProfileModal teacher={teacher} dark={dark} onClose={() => setProfileOpen(false)} onSaved={handleProfileSaved}/>)}
+        {profileOpen && teacher && (<ProfileModal teacher={teacher} dark={dark} mono={mono} onClose={() => setProfileOpen(false)} onSaved={handleProfileSaved}/>)}
 
       </ThemeProvider>
     </ColorModeContext.Provider>);
