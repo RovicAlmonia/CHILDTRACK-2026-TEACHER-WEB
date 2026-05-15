@@ -2,6 +2,7 @@ import { useState, createContext, useMemo, useEffect, useRef } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
+import { compressImage } from '../utils/compressImage';
 import { attendanceAPI } from '../api';
 import NotificationBell from '../components/NotificationBell';
 import PersonIcon from '@mui/icons-material/Person';
@@ -53,6 +54,7 @@ async function apiFetch(path, opts = {}) {
         ...opts,
         headers: {
             'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true',   // ← add this
             ...(token ? { Authorization: `Bearer ${token}` } : {}),
             ...(opts.headers ?? {}),
         },
@@ -591,12 +593,16 @@ function ProfileModal({ teacher, dark, mono, onClose, onSaved }) {
     const themeClass = mono ? 'lt-mono' : dark ? 'lt-dark' : 'lt-light';
 
     const handlePhotoChange = (e) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = () => setPhoto(reader.result);
-        reader.readAsDataURL(file);
+    const file = e.target.files?.[0];   // note: was missing .target
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = async () => {
+    const compressed = await compressImage(reader.result);
+    setPhoto(compressed);
     };
+    reader.readAsDataURL(file);
+  };
+
     const saveProfile = async () => {
         setSaving(true); setMsg(null);
         try {
